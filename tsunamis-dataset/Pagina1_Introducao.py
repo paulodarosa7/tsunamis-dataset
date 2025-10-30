@@ -14,9 +14,9 @@ from streamlit.components.v1 import html
 from more.sidebar import download_dataframe
 
 
-st.title("🌊 Earthquake & Tsunami Risk - Global Dataset")
+st.title("Global Earthquake-Tsunami Risk Assessment Dataset")
 
-df = pd.read_csv('/home/operador/Documentos/analise de Dados/tsunamis-dataset/dataset/tsunamis_database.csv')
+df = pd.read_csv('/home/aluno/tsunamis-dataset/tsunamis-dataset/dataset/tsunamis_database.csv')
 
 
 
@@ -44,7 +44,7 @@ st.pyplot(fig)
 st.write("Relação por mês do ano")
 import matplotlib.pyplot as plt
 
-# Filtrar apenas eventos com tsunami confirmado
+# filtrar apenas eventos com tsunami confirmado
 df_tsunamis_confirmados = df[df["tsunami"] == 1]
 
 tsunamis_por_mes = df_tsunamis_confirmados["Month"].value_counts().sort_index()
@@ -82,7 +82,30 @@ if total_tsunamis > 0:
 else:
     st.success("Nenhum tsunami registrado neste período")
 
+from streamlit_apexjs import st_apexcharts
 
+quantidade_tsunami = filtro['tsunami'].value_counts()
+
+options = {
+    'chart': {
+        'toolbar': {
+            'show': True,
+            'texto-color': 'k'
+        }
+    },
+    'labels': [f'Tsunami: {quantidade_tsunami.get(1, 0)}', f'Sem Tsunami: {quantidade_tsunami.get(0, 0)}'],  # Ajustando os rótulos com base nos valores
+    'legend': {
+        'show': True,
+        'position': 'top',
+    }
+}
+
+series = [int(quantidade_tsunami.get(1, 0)), int(quantidade_tsunami.get(0, 0))]  # Conta o número de tsunamis (1) e não-tsunamis (0)
+
+st.subheader("Distribuição de Tsunamis")
+st_apexcharts(options, series, 'donut','600', "Proporção Tsunami e Não Tsunami")
 
 #sidebar download da base
 download_dataframe(df)
+
+st.link_button("Link Dataset - Kaggle", "https://www.kaggle.com/datasets/ahmeduzaki/global-earthquake-tsunami-risk-assessment-dataset")

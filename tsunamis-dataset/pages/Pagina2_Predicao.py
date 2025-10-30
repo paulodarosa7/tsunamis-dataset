@@ -14,9 +14,8 @@ from streamlit.components.v1 import html
 from more.sidebar import download_dataframe
 
 
-st.title("🌊 Earthquake & Tsunami Risk - Global Dataset")
 
-df = pd.read_csv('/home/operador/Documentos/analise de Dados/tsunamis-dataset/dataset/tsunamis_database.csv')
+df = pd.read_csv('/home/aluno/tsunamis-dataset/tsunamis-dataset/dataset/tsunamis_database.csv')
 
 
 st.title("Pagina 2 - Prevendo possivel tsunami a partir de dados escolhidos pelo o usuário")
@@ -70,3 +69,5 @@ else:
 
 #sidebar download da base
 download_dataframe(df)
+
+st.link_button("Link Dataset - Kaggle", "https://www.kaggle.com/datasets/ahmeduzaki/global-earthquake-tsunami-risk-assessment-dataset")
